@@ -249,6 +249,18 @@ const course3 = {
 }                                  // Output (name: Javascript, price: 1000)
 console.log(course3)
 
+// BÀI TẬP: viết hàm arrToObj để chuyển array thành object.
+function arrToObj(arr) { 
+    return Object.fromEntries(arr) 
+ }
+ const obj1 = arrToObj([
+    ['name', 'Son Dang'], 
+    ['age', 21], 
+    ['address', 'Ha Noi']
+ ])
+ // Output: { name: 'Son Dang', age: 21, address: 'Ha Noi' }
+
+
 
 
 /**
@@ -321,9 +333,24 @@ function logger_vd2(...params) {      // rest: lấy ra còn lại (ở đây ph
 console.log(logger_vd2(1,2,3,4,5,6,7,8))  // Trả về mảng
 
 //---- Một ví dụ khác về Object {}
+function logger({ name, price, ...rest}) {
+    console.log(name)
+    console.log(price)
+    console.log(rest)
+}
+logger({
+    name: 'Javascript',
+    price: 1000,
+    description: 'Description content'
+})
 
-
-
+//---- Một ví dụ khác về Array []
+function logger([a, b, ...rest]) {
+    console.log(a)
+    console.log(a)
+    console.log(rest)
+}
+logger([2, 6, 12, 3, 5, 7, 15])
 
 
 
@@ -331,5 +358,60 @@ console.log(logger_vd2(1,2,3,4,5,6,7,8))  // Trả về mảng
 
 
 /**
- *  --------------------- 9. Spread --------------------
+ *  -------------------------- 9. Spread (...) ----------------------------
+ *      Toán tử rải
+ *      Bỏ đi []
  */
+
+// ----- Trường hợp NỐI MẢNG
+// BÀI TẬP: Cho 2 Array, tạo Array 3 nối 2 Array đã cho lại với nhau
+var array1 = ['Javascript', 'Ruby', 'PHP']
+var array2 = ['ReactJS', 'Dart']
+var array3 = [...array2, ...array1]     // In ra array 2 nằm trước array 1
+
+console.log(array3)
+
+// ----- Trường hợp HỢP NHẤT 2 OBJECT lại với nhau
+var object1 = {
+    name: 'Javascript'
+}
+var object2 = {
+    price: 1000
+}
+
+var object3 = {
+    ...object1,
+    ...object2         // Tóm lại thì Spread lại bỏ [] và {} (dùng...)
+}
+
+// ----- Trường hợp sử dụng Spread để TRUYỀN THAM SỐ cho hàm
+// ----- Lấy hết tất cả các giá trị trong MẢNG
+var array = ['Javascript', 'PHP', 'Ruby']
+
+function logger(...rest) {
+    for (var i = 0; i < rest.length; i++) {
+        console.log(rest[i])
+    }
+}
+
+logger(...array)        // Output: Javascript PHP  Ruby (XH|)
+
+//      rest: định nghĩa ra tham số
+//      spread: gọi đến hàm (truyền đối số) - xem lại vs trên
+
+
+
+
+/**
+ *  ------------------------- 12. Modules ---------------------------
+ *  Bóc tách
+ *  import / export
+ */
+import logger, { TYPE_LOG, TYPE_WARN, TYPE_ERROR } from './logger7.js'
+
+// console.log(typeof logger)   // function -> cái func bên logger.js
+
+// logger('Text message...', 'warn')
+logger('Text message...', TYPE_WARN)  // Như cái trên
+
+
