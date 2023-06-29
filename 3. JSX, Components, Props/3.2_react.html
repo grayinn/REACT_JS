@@ -1,0 +1,85 @@
+<!-- 2. Components -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </head>
+
+
+<body>
+
+    <div id="app"></div>
+
+    <script type="text/babel"> 
+        // Fact: this function có thể tách ra new file
+        function Header() {
+            return (
+                <div className="header">New Header</div>
+            )
+        }
+
+        function Content() {
+            return (
+                <div className="header">New Content</div>
+            )
+        }
+
+        function Footer() {
+            return (
+                <div className="header">New Footer</div>
+            )
+        }
+
+        // const app = (
+        //     <div className="wrapper">
+        //         <div className="header">Header</div>
+        //         <div className="content">Content</div>
+        //         <div className="footer">Footer</div>
+        //     </div>
+        // )
+
+        const app = (
+            <div className="wrapper">
+                <Header />
+                <Content />
+                <Footer />
+            </div>
+        )
+
+        ReactDOM.render(app, document.getElementById('app'))
+
+        // Class components 
+        class Tree extends React.Component {
+            render() {
+                return <h2>Hi, I am a Tree!</h2>;
+            }
+        }
+
+        // Function components
+        function Tree() {
+            return <h2>Hi, I am a Tree!</h2>;
+        }
+
+        // BÀI TẬP: Giả sử xây dựng website newspaper, có nhiều bài báo, làm sao để không
+        // cop nhiều đoạn code giống nhau để tạo ra n bài báo?
+        const web = (
+            <div className="post-list">
+                <div className="post-item">
+                    <h2 className="post-title">Đáp án 24 mã đề môn tiếng Anh thi tốt nghiệp THPT 2023</h2>
+                    <p className="post-desc">Môn tiếng Anh thi tốt nghiệp THPT 2023 được đánh giá "dễ thở" so với bài thi tổ hợp sáng nay, 29/6.</p>
+                    <p className="post-published">Chiều nay, 29/6, kỳ thi tốt nghiệp THPT 2023 khép lại với môn ngoại ngữ. Trong số 7 ngôn ngữ được lựa chọn thi, tiếng Anh là ngôn ngữ có số lượng thí sinh đăng ký thi đông nhất.
+                                                Bài thi tiếng Anh có 50 câu trắc nghiệm, thời gian làm bài 60 phút. Đề thi được đánh giá có độ phân hóa tốt nhưng "nhẹ nhàng", dễ đạt mức 7-8 với phần đa các thí sinh.</p>
+                </div>
+            </div>
+        )
+        console.log(web)
+        ReactDOM.render(web, document.getElementById('web'))
+
+    </script>
+
+
+</body>
+    <script src="3_react.js"></script>
+</html>

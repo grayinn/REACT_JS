@@ -1,0 +1,50 @@
+<!-- 3. Props -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </head>
+
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel"> 
+
+        // PostItems.js file
+        function PostItem() {
+            return (
+                <div className="post-item">
+
+                    <h2 className="post-title">Đáp án 24 mã đề môn tiếng Anh thi tốt nghiệp THPT 2023</h2>
+                    <p className="post-desc">Môn tiếng Anh thi tốt nghiệp THPT 2023 được đánh giá "dễ thở" so với bài thi tổ hợp sáng nay, 29/6.</p>
+                    <p className="post-published">Chiều nay, 29/6, kỳ thi tốt nghiệp THPT 2023 khép lại với môn ngoại ngữ. Trong số 7 ngôn ngữ được lựa chọn thi, tiếng Anh là ngôn ngữ có số lượng thí sinh đăng ký thi đông nhất.
+                                                Bài thi tiếng Anh có 50 câu trắc nghiệm, thời gian làm bài 60 phút. Đề thi được đánh giá có độ phân hóa tốt nhưng "nhẹ nhàng", dễ đạt mức 7-8 với phần đa các thí sinh.</p>
+                </div>
+            )
+        }
+
+        // Web,js file
+        function Web() {
+            return (
+                <div id="wrapper">
+                    <PostItem />
+                    <PostItem />
+                    <PostItem />
+                    <PostItem />  // hashcode --> props
+                </div>
+            )
+        }
+
+        // index.js (to render)
+        ReactDOM.render(<Web />, document.getElementById('root'))
+
+    </script>
+
+
+</body>
+    <script src="3_react.js"></script>
+</html>
