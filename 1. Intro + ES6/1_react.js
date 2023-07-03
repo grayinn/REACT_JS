@@ -253,11 +253,11 @@ console.log(course3)
 function arrToObj(arr) { 
     return Object.fromEntries(arr) 
  }
- const obj1 = arrToObj([
+const obj1 = arrToObj([
     ['name', 'Son Dang'], 
     ['age', 21], 
     ['address', 'Ha Noi']
- ])
+])
  // Output: { name: 'Son Dang', age: 21, address: 'Ha Noi' }
 
 
