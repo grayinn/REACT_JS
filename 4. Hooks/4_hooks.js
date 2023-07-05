@@ -394,9 +394,10 @@ function Content() {
     )
 }
 //-----> export default memo(Content)
+
 /**
- * -----------------------------------------------------------------------------
- * ----------------------- React.memo (to useCallback HOOKS) -------------------------------------
+ * ------------------------------------------------------------------------------
+ * ------------------------ React.memo (to useCallback HOOKS) -------------------
  *      1. memo() -> Higher Order Component (HOC)
  *      2. useCallback()            
  */
@@ -421,11 +422,230 @@ function App() {
 //export default App
 
 
+
+
+
+
+
+//------------------------------------------------------------------
+// ------------------------- Content.js
+// Use React.memo
+import { memo } from 'react'
+
+function Content({ onIncrease }) {
+
+    console.log('re-render')
+
+    return (
+        <>
+            <h1>Hello World!</h1>
+            <button onClick={onIncrease}>Click me!</button>
+        </>
+    )
+}
+//-----> export default memo(Content)
+
 /**
  * -----------------------------------------------------------------------------
- * ----------------------- useContext Hook -------------------------------------
- *              
+ * ----------------------- REACT useCallback HOOKS -------------------------------
+ *          const cachedFn = useCallback(fn, dependencies)    
  */
+
+import { useState, useCallback } from 'react'
+import Content from './Content'
+
+function App() {
+    const [count, setCount] = useState(0)
+
+    const handleIncrease = useCallback(() => {
+        setCount(prevCount => prevCount + 1)
+    }, [])  // [deps] trống --> trả lại tham chiếu trước đó thay vì tạo ra hàm mới
+
+// Component con <Content /> sẽ bị re-render mỗi khi "Click-me" --> KH cần thiết
+    return (
+        <div style={{ padding: '10px 30px' }}>
+            <Content 
+                onIncrease={handleIncrease} 
+            /> 
+            <h1>{count}</h1>
+        </div>
+    )
+}
+//export default App
+
+
+
+
+
+/**
+ * -----------------------------------------------------------------------------
+ * ---------------------------- useMemo Hook --------------------------------    
+ *      memo: tránh component bị re-render không cần thiết
+ *      useMemo: tránh thực hiện lại một logic không cần thiết      
+ */
+// App input product + price -> total
+import { useState, useMemo, useRef } from 'react'
+
+function App() {
+    const [name, setName] = useState('')
+    const [price, setPrice] = useState('')
+    const [products, setProducts] = useState([])
+
+    const nameRef = useRef()
+
+    const handleSubmit = () => {
+        setProducts([...products, {
+            name,
+            price: +price  
+        }])
+        setName('')       // Trả về chuỗi rỗng after Add
+        setPrice('')
+        nameRef.current.focus() 
+    }
+
+    // Just cal total when products changes, return result
+    const total = useMemo(() => {
+        const result = products.reduce((total, product) => {
+        return total + product.price
+        }, 0);
+
+        return result
+    }, [products]) 
+
+    return (
+        <div style={{ padding: "10px 32px" }}>
+        <input
+            ref={nameRef}   
+            value={name}
+            placeholder='Enter the product...'
+            onChange={(e) => setName(e.target.value)}
+        />
+        <br />
+        <input
+            value={price}
+            placeholder='Enter the price...'
+            onChange={(e) => setPrice(e.target.value)}
+        />
+        <br />
+        <button onClick={handleSubmit}>Add</button>
+        <br />
+        Total: {total}
+        <ul>
+            {products.map((product, index) => (
+            <li key={index}>
+                {product.name} - {product.price}
+            </li>
+            ))}
+        </ul>
+        </div>
+    )
+}
+
+//export default App
+
+
+
+
+
+
+/**
+ * -----------------------------------------------------------------------------
+ * ---------------------------- useReducer hook --------------------------------   
+ *          useReducer(<reducer>, <initialState>)
+ */ 
+// App Enter Up -> num+1; Enter Down -> num-1
+import { useReducer } from "react"
+
+//init state
+const initState = 0
+
+//action
+const UP_ACTION = "up"
+const DOWN_ACTION = "down"
+
+//reducer (dựa vào action để đưa ra cái state mới)
+const reducer = (state, action) => {
+    switch (action) {
+        case UP_ACTION:
+        return state + 1
+        case DOWN_ACTION:
+        return state - 1
+        default:
+        throw new Error("Invalid action")
+    }
+}
+//dispatch = func (reducer, initState) (initState = count)
+function Reducer() {
+    const [count, dispatch] = useReducer(reducer, initState)
+    return (
+        <div>
+        <h1>{count}</h1>
+        <button onClick={() => dispatch(DOWN_ACTION)}>DOWN</button>
+        <button onClick={() => dispatch(UP_ACTION)}>UP</button>
+        </div>
+    )
+}
+//export default Reducer
+
+
+
+
+
+/**
+ * -----------------------------------------------------------------------------
+ * ---------------------------- useContext Hook --------------------------------  
+ *       CompA => CompB => ComC     
+ *          - B1: Create context
+ *          - B2: Provider
+ *          - B3: Consumer   
+ */
+import { useState, createContext, useContext } from 'react'
+
+// 1. Create context
+const UserContext = createContext()    
+
+function Component1() {
+    const [user, setUser] = useState('Jesse Hall')
+
+// 2. Provider (cung cấp dữ liệu)
+    return (
+        <UserContext.Provider value={user}>      
+        <h1>{`Hello ${user}!`}</h1>
+        <Component2 />
+        </UserContext.Provider>
+    )
+}
+
+function Component2() {
+    return (
+        <>
+        <h1>Component 2</h1>
+        <Component3 />
+        </>
+    )
+}
+
+function Component3() {
+    // 3. Consumer (Nhận dữ liệu)
+    const user = useContext(UserContext)
+
+    return (
+        <>
+            <h1>Component 3</h1>
+            <h2>{`Hello ${user} again!`}</h2>
+        </>
+    )
+}
+
+
+
+
+/**
+ * --------------------------------------------------------------------------------------
+ * ---------------------------- useImperativeHandle Hook --------------------------------  
+ *                    useImperativeHandle(ref, createHandle, deps?)
+ */
+// 
 
 
 
